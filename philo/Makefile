@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2021/11/03 14:19:45 by ldurante         ###   ########.fr        #
+#    Updated: 2022/01/28 00:34:31 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,10 @@ $(NAME): $(OBJS) $(OBJS_UTILS)
 test: all
 	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
 	./philo 5 400 200 200 5
+
+test1: all
+	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
+	./philo 5 400 100 100
 
 normi:
 	norminette -R CheckForbiddenSourceHeaders srcs/*.c srcs_utils/*.c includes/*.h
