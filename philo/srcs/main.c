@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/01/31 12:54:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/01 03:41:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ uint64_t	timestamp(void)
 
 void	ft_error(char *ERR)
 {
-	printf("%s %s\n", PHILO, ERR);
+	printf("philo: %s\n", ERR);
 	exit (0);
 }
 
@@ -78,7 +78,6 @@ int	main(int argc, char **argv)
 	t_sim	sim;
 	int		i;
 
-	// p.start_time = timestamp();
 	if (argc >= 5 && argc <= 6)
 	{
 		if (!check_args(argv))
@@ -87,19 +86,16 @@ int	main(int argc, char **argv)
 			philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 			create_threads(philo, &sim);
 			i = 0;
-			// while (i < sim.n_philo)
-			// {
-			// 	pthread_mutex_destroy(&sim.forks[i]);
-			// 	pthread_mutex_destroy(philo[i].eat);
-			// 	i++;
-			// }
+			while (i < sim.n_philo)
+			{
+				pthread_mutex_destroy(&sim.forks[i]);
+				i++;
+			}
 		}
 		else
-			printf("%s %s\n", PHILO, ERR_ARG);
+			printf("philo: %s\n", ERR_ARG);
 	}
 	else
-		printf("%s %s\n", PHILO, ERR_USE);
-	// p.end_time = timestamp();
-	// printf("TIME: %lldms\n", p.end_time - p.start_time);
+		printf("philo: %s\n", ERR_USE);
 	return (0);
 }

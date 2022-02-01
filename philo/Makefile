@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/01/28 00:34:31 by ldurante         ###   ########.fr        #
+#    Updated: 2022/01/31 22:22:33 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ all: $(NAME)
 $(NAME): $(OBJS) $(OBJS_UTILS)
 	@$(MAKE) -s all -C libft
 	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_UTILS) libft/libft.a -lpthread -o $(NAME)
-	@echo "$(GREY) Philo compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
+	@echo "$(GREY) philo compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all
 	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
@@ -55,6 +55,10 @@ test: all
 test1: all
 	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
 	./philo 5 400 100 100
+	
+test2: all
+	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
+	./philo 6 400 100 100
 
 normi:
 	norminette -R CheckForbiddenSourceHeaders srcs/*.c srcs_utils/*.c includes/*.h
