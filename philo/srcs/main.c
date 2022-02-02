@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/01 03:41:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:41:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		parse_arg(t_sim *sim, int argc, char **argv)
 	if (argc == 6)
 		sim->n_meals = ft_atoi(argv[5]);
 	sim->start_time = timestamp();
+	// sim->last_meal = 0;
 	sim->philo_thread = malloc(sizeof(pthread_t) * sim->n_philo);
 	sim->forks = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
 	i = 0;

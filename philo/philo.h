@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:10:26 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/01 03:21:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:07:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define SLEEP 4
 # define THINK 5
 # define FULL 6
-
+# define DEAD 7
 
 # define PHILO "\033[2;37mPhilosopher\e[0m"
 # define PRINT_LEFT "took his left fork 🍴\n"
@@ -41,7 +41,7 @@
 # define PRINT_EAT "is eating noodles 🍜\n"
 # define PRINT_SLEEP "went to sleep and dropped both forks 🌙\n"
 # define PRINT_THINK "woke up and is thinking 💬\n"
-# define PRINT_FULL "all the philosophers ate"
+# define PRINT_DEAD "starved to death 💀\n"
 
 # define ERR_ARG "arguments must be positive numbers"
 # define ERR_NO_PHILO "there must be at least 1 philosopher"
@@ -56,8 +56,9 @@ typedef struct s_sim
 	uint64_t		to_die;
 	uint64_t		to_eat;
 	uint64_t		to_sleep;
+	uint64_t		t_last_meal;
 	bool			is_dead;
-	bool			max_meals;
+	// bool				max_meals;
 	uint64_t		start_time;
 	pthread_t		*philo_thread;
 	pthread_mutex_t	*forks;
