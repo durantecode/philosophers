@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:10:26 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/01 22:07:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:10:23 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define ERR_USE "usage: [n_philo] [time_to_die] \
 [time_to_eat] [time_to_sleep] [n_meals]"
 # define ERR_THREAD "failed to create threads"
+# define ERR_MUTEX "failed to initiate mutex"
 
 typedef struct s_sim
 {
@@ -56,9 +57,7 @@ typedef struct s_sim
 	uint64_t		to_die;
 	uint64_t		to_eat;
 	uint64_t		to_sleep;
-	uint64_t		t_last_meal;
 	bool			is_dead;
-	// bool				max_meals;
 	uint64_t		start_time;
 	pthread_t		*philo_thread;
 	pthread_mutex_t	*forks;
@@ -70,6 +69,8 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				meals_eaten;
+	uint64_t		t_last_meal;
+	pthread_mutex_t	*lock_sim;
 	t_sim			*sim_state;
 }	t_philo;
 

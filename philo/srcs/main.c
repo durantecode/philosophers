@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/01 13:41:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:09:06 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_error(char *ERR)
 	exit (0);
 }
 
-int		parse_arg(t_sim *sim, int argc, char **argv)
+void	parse_arg(t_sim *sim, int argc, char **argv)
 {
 	int i;
 
@@ -34,21 +34,19 @@ int		parse_arg(t_sim *sim, int argc, char **argv)
 	sim->to_die = ft_atoi(argv[2]);
 	sim->to_eat = ft_atoi(argv[3]);
 	sim->to_sleep = ft_atoi(argv[4]);
-	sim->n_meals = 0;
+	// sim->n_meals = 1;
 	if (argc == 6)
 		sim->n_meals = ft_atoi(argv[5]);
 	sim->start_time = timestamp();
-	// sim->last_meal = 0;
 	sim->philo_thread = malloc(sizeof(pthread_t) * sim->n_philo);
 	sim->forks = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
 	i = 0;
 	while (i < sim->n_philo)
 	{
 		if (pthread_mutex_init(&sim->forks[i], NULL))
-			return (1);
+			ft_error(ERR_MUTEX);
 		i++;
 	}
-	return (0);
 }
 
 int	check_args(char **argv)
