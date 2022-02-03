@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:46:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/03 18:46:43 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:15:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,28 @@ void	print_log(t_philo *philo, int ACTION, int id)
 		printf("%s%-5lld %s%s %s%d%s %s", BB, time_diff, NC, PHILO, BR, id, NC, PRINT_DEAD);
 }
 
-void	check_if_dead(t_philo *philo)
+void	check_if_dead(t_philo *philo, t_sim *sim)
 {
 	uint64_t time;
+	int i;
 
-	time = timestamp() - philo->sim_state->start_time;
-	if (time > philo->sim_state->to_die)
-		philo->sim_state->is_dead = true;
+	i = 0;
+	while (philo->meals_eaten != philo->sim_state->n_meals)
+	{
+		if (i == sim->n_philo - 1)
+			i = 0;
+		time = timestamp() - philo[i].t_last_meal;
+		// printf("%d\n", philo->is_eating);
+		if (time > philo[i].sim_state->to_die)
+		{
+			philo[i].sim_state->is_dead = true;
+			print_log(philo, DEAD, philo[i].id);
+			pthread_mutex_unlock(&philo->sim_state->forks[philo->left_fork]);
+			return ;
+		}
+		if (sim->n_philo != 1)
+			i++;
+	}
 }
 
 void	my_usleep(t_philo *philo, uint64_t action_time)
@@ -70,8 +85,10 @@ void	take_forks(t_philo *philo)
 void	eat_and_drop_forks(t_philo *philo)
 {
 	print_log(philo, EAT, philo->id);
-	my_usleep(philo, philo->sim_state->to_eat);
 	philo->t_last_meal = timestamp();
+	pthread_mutex_lock(&philo->sim_state->eating[philo->is_eating]);
+	my_usleep(philo, philo->sim_state->to_eat);
+	pthread_mutex_unlock(&philo->sim_state->eating[philo->is_eating]);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->sim_state->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->sim_state->forks[philo->right_fork]);
@@ -92,12 +109,8 @@ void	*routine(void *arg_p)
 	philo->t_last_meal = timestamp();
 	while (!philo->sim_state->is_dead && philo->meals_eaten != philo->sim_state->n_meals)
 	{
-		// if (philo->sim_state->is_dead)
-		// 	pthread_mutex_lock(&philo->lock_sim[philo->id]);
 		take_forks(philo);
 		eat_and_drop_forks(philo);
-		// if (philo->sim_state->is_dead)
-		// 	break ;
 		think(philo);
 	}
 	return (0);
@@ -113,6 +126,7 @@ void	create_threads(t_philo *philo, t_sim *sim)
 		philo[i].id = i + 1;
 		philo[i].left_fork = i;
 		philo[i].right_fork = (i + 1) % sim->n_philo;
+		philo[i].is_eating = 0;
 		philo[i].meals_eaten = 0;
 		philo[i].sim_state = sim;
 		// philo[i].t_last_meal = timestamp();
@@ -126,23 +140,7 @@ void	create_threads(t_philo *philo, t_sim *sim)
 		usleep(50);
 		i++;
 	}
-	i = 0;
-	while (1)
-	{
-		if (i == sim->n_philo - 1)
-			i = 0;
-		if (timestamp() - philo[i].t_last_meal > philo[i].sim_state->to_die)
-		{
-			philo[i].sim_state->is_dead = true;
-			print_log(philo, DEAD, philo[i].id);
-			pthread_mutex_unlock(&philo->sim_state->forks[philo->left_fork]);
-			// pthread_mutex_unlock(&philo->sim_state->forks[philo->right_fork]);
-			break ;
-		}
-		if (sim->n_philo != 1)
-			i++;
-	}
-	
+	check_if_dead(philo, sim);
 	i = 0;
 	while (i < sim->n_philo)
 	{

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/03 18:09:06 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/03 21:33:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,20 @@ void	parse_arg(t_sim *sim, int argc, char **argv)
 	sim->to_die = ft_atoi(argv[2]);
 	sim->to_eat = ft_atoi(argv[3]);
 	sim->to_sleep = ft_atoi(argv[4]);
-	// sim->n_meals = 1;
+	sim->n_meals = -1;
 	if (argc == 6)
 		sim->n_meals = ft_atoi(argv[5]);
 	sim->start_time = timestamp();
+	sim->is_dead = false;
 	sim->philo_thread = malloc(sizeof(pthread_t) * sim->n_philo);
 	sim->forks = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
+	sim->eating = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
 	i = 0;
 	while (i < sim->n_philo)
 	{
 		if (pthread_mutex_init(&sim->forks[i], NULL))
+			ft_error(ERR_MUTEX);
+		if (pthread_mutex_init(&sim->eating[i], NULL))
 			ft_error(ERR_MUTEX);
 		i++;
 	}
@@ -88,6 +92,7 @@ int	main(int argc, char **argv)
 			while (i < sim.n_philo)
 			{
 				pthread_mutex_destroy(&sim.forks[i]);
+				pthread_mutex_destroy(&sim.eating[i]);
 				i++;
 			}
 		}

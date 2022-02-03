@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:10:26 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/03 18:10:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/03 21:33:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_sim
 	uint64_t		start_time;
 	pthread_t		*philo_thread;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*eating;
 }	t_sim;
 
 typedef struct s_philo
@@ -68,9 +69,9 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
+	int				is_eating;
 	int				meals_eaten;
 	uint64_t		t_last_meal;
-	pthread_mutex_t	*lock_sim;
 	t_sim			*sim_state;
 }	t_philo;
 
