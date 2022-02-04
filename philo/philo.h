@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:10:26 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/04 11:42:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/04 12:21:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,9 @@ typedef struct s_philo
 int			main(int argc, char **argv);
 void		ft_error(char *str, t_sim *sim);
 void		free_philo(t_philo *philo, t_sim *sim);
-
 void		create_threads(t_philo *p, t_sim *sim);
-
 uint64_t	timestamp(void);
 void		my_usleep(t_philo *philo, uint64_t action_time);
-
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 

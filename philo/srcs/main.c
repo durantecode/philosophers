@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/04 11:52:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/04 12:34:13 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int argc, char **argv)
 	t_sim	sim;
 	int		err;
 
-	// atexit(leaks);
 	if (argc >= 5 && argc <= 6)
 	{
 		err = check_args(argv);
@@ -93,6 +92,5 @@ int	main(int argc, char **argv)
 	}
 	else
 		printf("philo: %s\n", ERR_USE);
-	system("leaks -q philo");
 	return (0);
 }
