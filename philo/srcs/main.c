@@ -6,11 +6,16 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/03 21:33:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/04 02:36:25 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	leaks()
+{
+	system("leaks -q philo");
+}
 
 uint64_t	timestamp(void)
 {
@@ -40,14 +45,13 @@ void	parse_arg(t_sim *sim, int argc, char **argv)
 	sim->start_time = timestamp();
 	sim->is_dead = false;
 	sim->philo_thread = malloc(sizeof(pthread_t) * sim->n_philo);
-	sim->forks = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
-	sim->eating = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
+	sim->forks_lock = malloc(sizeof(pthread_mutex_t) * sim->n_philo);
+	if (pthread_mutex_init(&sim->dead_lock, NULL))
+		ft_error(ERR_MUTEX);
 	i = 0;
 	while (i < sim->n_philo)
 	{
-		if (pthread_mutex_init(&sim->forks[i], NULL))
-			ft_error(ERR_MUTEX);
-		if (pthread_mutex_init(&sim->eating[i], NULL))
+		if (pthread_mutex_init(&sim->forks_lock[i], NULL))
 			ft_error(ERR_MUTEX);
 		i++;
 	}
@@ -81,6 +85,7 @@ int	main(int argc, char **argv)
 	t_sim	sim;
 	int		i;
 
+	// atexit(leaks);
 	if (argc >= 5 && argc <= 6)
 	{
 		if (!check_args(argv))
@@ -91,8 +96,7 @@ int	main(int argc, char **argv)
 			i = 0;
 			while (i < sim.n_philo)
 			{
-				pthread_mutex_destroy(&sim.forks[i]);
-				pthread_mutex_destroy(&sim.eating[i]);
+				pthread_mutex_destroy(&sim.forks_lock[i]);
 				i++;
 			}
 		}

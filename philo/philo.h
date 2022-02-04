@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:10:26 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/03 21:33:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/04 02:34:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@
 # define DEAD 7
 
 # define PHILO "\033[2;37mPhilosopher\e[0m"
+# define PRINT_FORK "has taken a fork 🍴\n"
 # define PRINT_LEFT "took his left fork 🍴\n"
 # define PRINT_RIGHT "took his right fork 🍴\n"
-# define PRINT_EAT "is eating noodles 🍜\n"
-# define PRINT_SLEEP "went to sleep and dropped both forks 🌙\n"
-# define PRINT_THINK "woke up and is thinking 💬\n"
-# define PRINT_DEAD "starved to death 💀\n"
+# define PRINT_EAT "is eating 🍜\n"
+# define PRINT_SLEEP "is sleeping 🌙\n"
+# define PRINT_THINK "is thinking 💬\n"
+# define PRINT_DEAD "died 💀\n"
 
 # define ERR_ARG "arguments must be positive numbers"
 # define ERR_NO_PHILO "there must be at least 1 philosopher"
@@ -58,10 +59,10 @@ typedef struct s_sim
 	uint64_t		to_eat;
 	uint64_t		to_sleep;
 	bool			is_dead;
+	pthread_mutex_t	dead_lock;
 	uint64_t		start_time;
 	pthread_t		*philo_thread;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	*eating;
+	pthread_mutex_t	*forks_lock;
 }	t_sim;
 
 typedef struct s_philo
@@ -72,7 +73,7 @@ typedef struct s_philo
 	int				is_eating;
 	int				meals_eaten;
 	uint64_t		t_last_meal;
-	t_sim			*sim_state;
+	t_sim			*info;
 }	t_philo;
 
 int			main(int argc, char **argv);
