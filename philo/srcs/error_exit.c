@@ -1,21 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 19:30:54 by ldurante          #+#    #+#             */
-/*   Updated: 2021/04/13 10:20:25 by ldurante         ###   ########.fr       */
+/*   Created: 2022/02/04 11:06:53 by ldurante          #+#    #+#             */
+/*   Updated: 2022/02/04 11:44:17 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Outputs the character ’c’ to the given file
-descriptor.*/
+#include "../philo.h"
 
-#include "libft.h"
-
-void	ft_putchar_fd(char c, int fd)
+void	free_philo(t_philo *philo, t_sim *sim)
 {
-	write(fd, &c, 1);
+	int i;
+	
+	i = 0;
+	while (i < sim->n_philo)
+	{
+		pthread_mutex_destroy(&sim->forks_lock[i]);
+		i++;
+	}
+	free(sim->philo_thread);
+	free(sim->forks_lock);
+	(void)philo;
+}
+
+
+void	ft_error(char *ERR, t_sim *sim)
+{
+	printf("philo: %s\n", ERR);
+	free(sim->philo_thread);
+	free(sim->forks_lock);
+	exit (0);
 }

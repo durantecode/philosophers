@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/01/31 22:22:33 by ldurante         ###   ########.fr        #
+#    Updated: 2022/02/04 11:13:41 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,51 +31,53 @@ NO_COLOR = \033[0m
 
 # SOURCES & OBJECTS #
 
-SRCS = srcs/main.c srcs/threads.c
-
-# SRCS_UTILS = srcs_utils/ft_putchar_fd.c srcs_utils/ft_putendl_fd.c srcs_utils/ft_putstr_fd.c srcs_utils/ft_split.c \
-			 srcs_utils/ft_strjoin.c srcs_utils/ft_strncmp.c srcs_utils/ft_strlen.c srcs_utils/ft_strdup.c
+SRCS =	srcs/main.c \
+		srcs/threads.c \
+		srcs/time.c \
+		srcs/utils.c \
+		srcs/error_exit.c
 
 OBJS = $(SRCS:.c=.o)
-OBJS_UTILS = $(SRCS_UTILS:.c=.o)
 
 # RULES #
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(OBJS_UTILS)
-	@$(MAKE) -s all -C libft
-	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_UTILS) libft/libft.a -lpthread -o $(NAME)
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -lpthread -o $(NAME)
 	@echo "$(GREY) philo compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all
-	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
-	./philo 5 400 200 200 5
+	@echo "$(YELLOW) **** Running philo test **** $(NO_COLOR)"
+	./philo 1 800 200 200
 
 test1: all
-	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
-	./philo 5 400 100 100
+	@echo "$(YELLOW) **** Running philo test1 **** $(NO_COLOR)"
+	./philo 5 800 200 200
 	
 test2: all
-	@echo "$(YELLOW) **** Running test Philo **** $(NO_COLOR)"
-	./philo 6 400 100 100
+	@echo "$(YELLOW) **** Running philo test2 **** $(NO_COLOR)"
+	./philo 5 800 200 200 7
 
-normi:
-	norminette -R CheckForbiddenSourceHeaders srcs/*.c srcs_utils/*.c includes/*.h
+test3: all
+	@echo "$(YELLOW) **** Running philo test3 **** $(NO_COLOR)"
+	./philo 4 410 200 200
+
+test4: all
+	@echo "$(YELLOW) **** Running philo test3 **** $(NO_COLOR)"
+	./philo 4 310 200 200
 
 clean:
 	@clear
-	@$(RM) $(OBJS) $(OBJS_UTILS)
-	@$(MAKE) clean -C libft
-	@echo "$(RED) **** Object files removed **** $(NO_COLOR)"
+	@$(RM) $(OBJS)
+	@echo "$(RED) **** object files deleted **** $(NO_COLOR)"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) libft/libft.a
-	@echo "$(RED) **** Fclean done **** $(NO_COLOR)"
+	@echo "$(RED) **** philo deleted **** $(NO_COLOR)"
 
 re: fclean all
 
-.PHONY: all re clean fclean test
+.PHONY: all re clean fclean test test1 test2 test3 test4
 
-.SILENT: $(OBJS) $(OBJS_UTILS)
+.SILENT: $(OBJS)
