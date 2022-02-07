@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/04 11:13:41 by ldurante         ###   ########.fr        #
+#    Updated: 2022/02/07 18:25:27 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRCS =	srcs/main.c \
 		srcs/threads.c \
 		srcs/time.c \
 		srcs/utils.c \
-		srcs/error_exit.c
+		srcs/routine.c \
+		srcs/error.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -47,24 +48,24 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -lpthread -o $(NAME)
 	@echo "$(GREY) philo compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
-test: all
-	@echo "$(YELLOW) **** Running philo test **** $(NO_COLOR)"
-	./philo 1 800 200 200
-
 test1: all
 	@echo "$(YELLOW) **** Running philo test1 **** $(NO_COLOR)"
-	./philo 5 800 200 200
-	
+	./philo 1 800 200 200
+
 test2: all
 	@echo "$(YELLOW) **** Running philo test2 **** $(NO_COLOR)"
-	./philo 5 800 200 200 7
-
+	./philo 5 800 200 200
+	
 test3: all
 	@echo "$(YELLOW) **** Running philo test3 **** $(NO_COLOR)"
-	./philo 4 410 200 200
+	./philo 5 800 200 200 7
 
 test4: all
-	@echo "$(YELLOW) **** Running philo test3 **** $(NO_COLOR)"
+	@echo "$(YELLOW) **** Running philo test4 **** $(NO_COLOR)"
+	./philo 4 410 200 200
+
+test5: all
+	@echo "$(YELLOW) **** Running philo test5 **** $(NO_COLOR)"
 	./philo 4 310 200 200
 
 clean:
@@ -78,6 +79,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all re clean fclean test test1 test2 test3 test4
+.PHONY: all re clean fclean test1 test2 test3 test4 test5
 
 .SILENT: $(OBJS)

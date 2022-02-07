@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:10:26 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/04 12:21:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/07 17:49:01 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define ERR_ARG "arguments must be positive numbers"
 # define ERR_NO_PHILO "there must be at least 1 philosopher"
 # define ERR_MAX_PHILO "number of philos can't exceed 200"
+# define ERR_MAX_INT "time can't exceed max int"
 # define ERR_USE "usage: [n_philo] [time_to_die] \
 [time_to_eat] [time_to_sleep] [n_meals]"
 # define ERR_THREAD "failed to create threads"
@@ -77,8 +78,10 @@ typedef struct s_philo
 int			main(int argc, char **argv);
 void		ft_error(char *str, t_sim *sim);
 void		free_philo(t_philo *philo, t_sim *sim);
-void		create_threads(t_philo *p, t_sim *sim);
+int			create_threads(t_philo *p, t_sim *sim);
+void		*routine(void *arg_p);
 uint64_t	timestamp(void);
+void		print_log(t_philo *philo, int ACTION, int id);
 void		my_usleep(t_philo *philo, uint64_t action_time);
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
