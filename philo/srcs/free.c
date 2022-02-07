@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 11:06:53 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/07 16:21:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:35:43 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,4 @@ void	free_philo(t_philo *philo, t_sim *sim)
 	free(sim->philo_thread);
 	free(sim->forks_lock);
 	free(philo);
-}
-
-void	ft_error(char *ERR, t_sim *sim)
-{
-	printf("philo: %s\n", ERR);
-	free(sim->philo_thread);
-	free(sim->forks_lock);
 }

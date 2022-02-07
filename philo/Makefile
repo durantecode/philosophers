@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/18 12:11:44 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/07 18:25:27 by ldurante         ###   ########.fr        #
+#    Updated: 2022/02/07 18:47:42 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS =	srcs/main.c \
 		srcs/time.c \
 		srcs/utils.c \
 		srcs/routine.c \
-		srcs/error.c
+		srcs/free.c
 
 OBJS = $(SRCS:.c=.o)
 

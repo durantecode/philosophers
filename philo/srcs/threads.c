@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:46:22 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/07 18:15:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:35:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	create_threads(t_philo *philo, t_sim *sim)
 	{
 		if ((pthread_create(&sim->philo_thread[i], NULL, &routine, &philo[i])))
 		{	
-			ft_error(ERR_THREAD, sim);
+			printf("philo: %s\n", ERR_THREAD);
 			return (1);
 		}
 		usleep(210);

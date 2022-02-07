@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:15:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/07 18:19:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:48:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,22 @@ int	start_philo(t_philo *philo, t_sim *sim, int argc, char **argv)
 	int	i;
 	int	err;
 
-	i = 0;
 	err = 0;
 	if (parse_arg(sim, argc, argv))
 		return (1);
 	if (pthread_mutex_init(&sim->dead_lock, NULL))
 	{
-		ft_error(ERR_MUTEX, sim);
-		err = 1;
+		printf("philo: %s\n", ERR_MUTEX);
+		return (1);
 	}
-	while (i < sim->n_philo)
+	i = -1;
+	while (++i < sim->n_philo)
 	{
 		if (pthread_mutex_init(&sim->forks_lock[i], NULL))
 		{
-			ft_error(ERR_MUTEX, sim);
-			err = 1;
+			printf("philo: %s\n", ERR_MUTEX);
+			return (1);
 		}
-		i++;
 	}
 	philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 	if (create_threads(philo, sim) && !err)
@@ -102,7 +101,6 @@ int	main(int argc, char **argv)
 	t_sim	sim;
 	int		err;
 
-	// atexit(leaks);
 	err = 0;
 	philo = NULL;
 	if (argc >= 5 && argc <= 6)
